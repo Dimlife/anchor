@@ -28,8 +28,8 @@ class TextGenerator(object):
         self.url = url
         if url is None:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            self.bert_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-cased')
-            self.bert = DistilBertForMaskedLM.from_pretrained('distilbert-base-cased')
+            self.bert_tokenizer = DistilBertTokenizer.from_pretrained('bert-base-chinese')
+            self.bert = DistilBertForMaskedLM.from_pretrained('bert-base-chinese')
             self.bert.to(self.device)
             self.bert.eval()
 
