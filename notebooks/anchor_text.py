@@ -8,7 +8,7 @@ import sklearn.ensemble
 import spacy
 import sys
 from sklearn.feature_extraction.text import CountVectorizer
-from anchor_ import anchor_text
+from anchor import anchor_text
 import time
 
 def load_polarity(path='./rt-polaritydata'):
