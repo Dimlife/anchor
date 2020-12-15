@@ -25,7 +25,7 @@ def load_polarity(path='./rt-polaritydata'):
             labels.append(l)
     return data, labels
 
-nlp = spacy.load('/home/jinzhiyu/anchor/en_core_web_lg-3.0.0a0/en_core_web_lg')
+nlp = spacy.load('/home/jinzhiyu/anchor/en_core_web_lg-3.0.0a0/en_core_web_lg/en_core_web_lg-3.0.0a0')
 
 data, labels = load_polarity()
 train, test, train_labels, test_labels = sklearn.model_selection.train_test_split(data, labels, test_size=.2, random_state=42)
