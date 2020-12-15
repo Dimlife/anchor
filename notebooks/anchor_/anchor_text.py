@@ -116,7 +116,8 @@ class AnchorText(object):
         self.use_unk_distribution = use_unk_distribution
         self.tg = None
         self.use_bert = use_bert
-        self.neighbors = utils.Neighbors(self.nlp)
+        if use_bert is False:
+            self.neighbors = utils.Neighbors(self.nlp)
         self.mask_string = mask_string
         if not self.use_unk_distribution and self.use_bert:
             self.tg = TextGenerator()
