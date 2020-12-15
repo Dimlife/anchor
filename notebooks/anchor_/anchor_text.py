@@ -47,8 +47,10 @@ class TextGenerator(object):
         for i in masked:
             v, top_preds = torch.topk(outputs[0, i], 500)
             words = tokenizer.convert_ids_to_tokens(top_preds)
+            print('words in text_generator', words)
             v = np.array([float(x) for x in v])
             ret.append((words, v))
+            print('ret in text_generator', ret)
         return ret
 
 class SentencePerturber:
@@ -65,7 +67,7 @@ class SentencePerturber:
             a[i] = self.mask
             s = ' '.join(a)
             w, p = self.probs(s)[0]
-            self.pr[i] =  min(0.5, dict(zip(w, p)).get(words[i], 0.01))
+            self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
     def sample(self, data):
         a = self.array.copy()
         masks = np.where(data == 0)[0]
