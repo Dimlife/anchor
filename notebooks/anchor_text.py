@@ -110,7 +110,7 @@ explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distri
 
 
 np.random.seed(1)
-text = '你好 猛男'
+text = '你好 人'
 pred = explainer.class_names[predict_lr([text])[0]]
 alternative =  explainer.class_names[1 - predict_lr([text])[0]]
 print('Prediction: %s' % pred)

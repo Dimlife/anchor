@@ -358,7 +358,7 @@ def perturb_sentence(text, present, n, neighbors, proba_change=0.5,
     # pos: which POS to change
 
     tokens = neighbors.nlp(text)
-    # print [x.pos_ for x in tokens]
+    print([x.pos_ for x in tokens])
     eligible = []
     forbidden = set(forbidden)
     forbidden_tags = set(forbidden_tags)
