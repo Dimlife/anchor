@@ -26,10 +26,11 @@ def load_polarity(path='./rt-polaritydata'):
     return data, labels
 
 # nlp = spacy.load('/home/jinzhiyu/anchor/en_core_web_lg-3.0.0a0/en_core_web_lg/en_core_web_lg-3.0.0a0')
-nlp = spacy.load('/home/jinzhiyu/anchor/en_core_web_sm-3.0.0a0/en_core_web_sm/en_core_web_sm-3.0.0a0')
+# nlp = spacy.load('/home/jinzhiyu/anchor/en_core_web_sm-3.0.0a0/en_core_web_sm/en_core_web_sm-3.0.0a0')
+nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh_core_web_sm-3.0.0a0')
 
-# data, labels = ['你好 上海', '你好 杨浦', '你好 北京', '你不好好 哥哥', '你好 菜鸟', '你好 不夜城', '你不好 不夜城', '你不好 哥', '你不好 背景'], [1, 1, 1, 0, 1, 1, 0, 0, 0]
-data, labels = load_polarity()
+data, labels = ['你好 上海', '你好 杨浦', '你好 北京', '你不好好 哥哥', '你好 菜鸟', '你好 不夜城', '你不好 不夜城', '你不好 哥', '你不好 背景'], [1, 1, 1, 0, 1, 1, 0, 0, 0]
+# data, labels = load_polarity()
 print(data, labels)
 train, test, train_labels, test_labels = sklearn.model_selection.train_test_split(data, labels, test_size=.2, random_state=42)
 train, val, train_labels, val_labels = sklearn.model_selection.train_test_split(train, train_labels, test_size=.1, random_state=42)
@@ -109,7 +110,7 @@ explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distri
 
 
 np.random.seed(1)
-text = 'This is a good book .'
+text = '你好 猛男'
 pred = explainer.class_names[predict_lr([text])[0]]
 alternative =  explainer.class_names[1 - predict_lr([text])[0]]
 print('Prediction: %s' % pred)
