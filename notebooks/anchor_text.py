@@ -53,7 +53,7 @@ def predict_lr(texts):
 explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=True)
 
 np.random.seed(1)
-text = 'This is a good book .'
+text = '你好 好哥哥'
 pred = explainer.class_names[predict_lr([text])[0]]
 alternative = explainer.class_names[1 - predict_lr([text])[0]]
 print('Prediction: %s' % pred)
