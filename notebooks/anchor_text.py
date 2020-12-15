@@ -27,7 +27,9 @@ def load_polarity(path='./rt-polaritydata'):
 
 nlp = spacy.load('/home/jinzhiyu/anchor/en_core_web_lg-3.0.0a0/en_core_web_lg/en_core_web_lg-3.0.0a0')
 
+# data, labels = ['你好 上海', '你好 杨浦', '你好 北京'], [0, 1, 0]
 data, labels = load_polarity()
+print(data, labels)
 train, test, train_labels, test_labels = sklearn.model_selection.train_test_split(data, labels, test_size=.2, random_state=42)
 train, val, train_labels, val_labels = sklearn.model_selection.train_test_split(train, train_labels, test_size=.1, random_state=42)
 train_labels = np.array(train_labels)
