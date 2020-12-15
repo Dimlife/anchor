@@ -25,6 +25,6 @@ def load_polarity(path='./rt-polaritydata'):
             labels.append(l)
     return data, labels
 
-nlp = spacy.load('C:/Users/jinzhiyu/Desktop/zh_core_web_trf-3.0.0a0/zh_core_web_trf/zh_core_web_trf-3.0.0a0')
+nlp = spacy.load('home/jinzhiyu/anchor/zh_core_web_trf-3.0.0a0/zh_core_web_trf/zh_core_web_trf-3.0.0a0')
 
 print(nlp)
