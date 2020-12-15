@@ -47,60 +47,60 @@ preds = c.predict(val_vectors)
 print('Val accuracy', sklearn.metrics.accuracy_score(val_labels, preds))
 def predict_lr(texts):
     return c.predict(vectorizer.transform(texts))
-
-explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=True)
-
-np.random.seed(1)
-text = 'This is a good book .'
-pred = explainer.class_names[predict_lr([text])[0]]
-alternative = explainer.class_names[1 - predict_lr([text])[0]]
-print('Prediction: %s' % pred)
-exp = explainer.explain_instance(text, predict_lr, threshold=0.95)
-
-print('Anchor: %s' % (' AND '.join(exp.names())))
-print('Precision: %.2f' % exp.precision())
-print()
-print('Examples where anchor applies and model predicts %s:' % pred)
-print()
-print('\n'.join([x[0] for x in exp.examples(only_same_prediction=True)]))
-print()
-print('Examples where anchor applies and model predicts %s:' % alternative)
-print()
-print('\n'.join([x[0] for x in exp.examples(partial_index=0, only_different_prediction=True)]))
-
-# changing the distribution
-explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=False, use_bert=False)
-
-np.random.seed(1)
-text = 'This is a good book .'
-pred = explainer.class_names[predict_lr([text])[0]]
-alternative =  explainer.class_names[1 - predict_lr([text])[0]]
-print('Prediction: %s' % pred)
-exp = explainer.explain_instance(text, predict_lr, threshold=0.95, verbose=False, use_proba=True)
-
-
-print('Anchor: %s' % (' AND '.join(exp.names())))
-print('Precision: %.2f' % exp.precision())
-print()
-print('Examples where anchor applies and model predicts %s:' % pred)
-print()
-print('\n'.join([x[0] for x in exp.examples(only_same_prediction=True)]))
-print()
-print('Examples where anchor applies and model predicts %s:' % alternative)
-print()
-print('\n'.join([x[0] for x in exp.examples(only_different_prediction=True)]))
-
-print('Partial anchor: %s' % (' AND '.join(exp.names(0))))
-print('Precision: %.2f' % exp.precision(0))
-print()
-print('Examples where anchor applies and model predicts %s:' % pred)
-print()
-print('\n'.join([x[0] for x in exp.examples(partial_index=0, only_same_prediction=True)]))
-print()
-print('Examples where anchor applies and model predicts %s:' % alternative)
-print()
-print('\n'.join([x[0] for x in exp.examples(partial_index=0, only_different_prediction=True)]))
-
+#
+# explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=True)
+#
+# np.random.seed(1)
+# text = 'This is a good book .'
+# pred = explainer.class_names[predict_lr([text])[0]]
+# alternative = explainer.class_names[1 - predict_lr([text])[0]]
+# print('Prediction: %s' % pred)
+# exp = explainer.explain_instance(text, predict_lr, threshold=0.95)
+#
+# print('Anchor: %s' % (' AND '.join(exp.names())))
+# print('Precision: %.2f' % exp.precision())
+# print()
+# print('Examples where anchor applies and model predicts %s:' % pred)
+# print()
+# print('\n'.join([x[0] for x in exp.examples(only_same_prediction=True)]))
+# print()
+# print('Examples where anchor applies and model predicts %s:' % alternative)
+# print()
+# print('\n'.join([x[0] for x in exp.examples(partial_index=0, only_different_prediction=True)]))
+#
+# # changing the distribution
+# explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=False, use_bert=False)
+#
+# np.random.seed(1)
+# text = 'This is a good book .'
+# pred = explainer.class_names[predict_lr([text])[0]]
+# alternative =  explainer.class_names[1 - predict_lr([text])[0]]
+# print('Prediction: %s' % pred)
+# exp = explainer.explain_instance(text, predict_lr, threshold=0.95, verbose=False, use_proba=True)
+#
+#
+# print('Anchor: %s' % (' AND '.join(exp.names())))
+# print('Precision: %.2f' % exp.precision())
+# print()
+# print('Examples where anchor applies and model predicts %s:' % pred)
+# print()
+# print('\n'.join([x[0] for x in exp.examples(only_same_prediction=True)]))
+# print()
+# print('Examples where anchor applies and model predicts %s:' % alternative)
+# print()
+# print('\n'.join([x[0] for x in exp.examples(only_different_prediction=True)]))
+#
+# print('Partial anchor: %s' % (' AND '.join(exp.names(0))))
+# print('Precision: %.2f' % exp.precision(0))
+# print()
+# print('Examples where anchor applies and model predicts %s:' % pred)
+# print()
+# print('\n'.join([x[0] for x in exp.examples(partial_index=0, only_same_prediction=True)]))
+# print()
+# print('Examples where anchor applies and model predicts %s:' % alternative)
+# print()
+# print('\n'.join([x[0] for x in exp.examples(partial_index=0, only_different_prediction=True)]))
+#
 
 explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=False, use_bert=True)
 
