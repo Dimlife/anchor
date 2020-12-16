@@ -35,7 +35,7 @@ def predict_lr(data, dmid_choose=0):
     :param dmid_choose: int
     :return: np_array of real numbers
     """
-    batch = 10
+    batch = 2000
     request_data = {
         "dmids": [],
         "danmaku": [],
@@ -56,7 +56,12 @@ def predict_lr(data, dmid_choose=0):
 
     # print(data)
     for i in tqdm(range(len(data) // batch + 1)):
+        print(i)
+        print(len(data))
         cur_data = data[i * batch: (i + 1) * batch]
+        if len(cur_data) == 1:
+            my_total_0.append(send_request([cur_data[0]] * 2, dmid_choose)[0])
+            continue
         if len(cur_data) == 0:
             continue
         sex = [1] * len(cur_data)
@@ -85,6 +90,7 @@ def predict_lr(data, dmid_choose=0):
             print(request_data)
         # print('my_total_0', my_total_0)
     return np.array(my_total_0)
+
 nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh_core_web_sm-3.0.0a0')
 
 '''
