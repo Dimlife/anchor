@@ -119,8 +119,8 @@ explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distri
 
 np.random.seed(1)
 text = '生 命 的 真 谛 是 爱'
-pred = explainer.class_names[predict_lr([text])[0]]
-alternative = explainer.class_names[1 - predict_lr([text])[0]]
+pred = explainer.class_names[predict_lr([text] * 10)[0]]
+alternative = explainer.class_names[1 - predict_lr([text] * 10)[0]]
 print('Prediction: %s' % pred)
 b = time.time()
 exp = explainer.explain_instance(text, predict_lr, threshold=0.95, verbose=False)
