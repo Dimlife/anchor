@@ -28,7 +28,7 @@ def load_polarity(path='./rt-polaritydata'):
             labels.append(l)
     return data, labels
 
-def predict_lr(data):
+def predict_lr(data, dmid_choose=0):
     """
 
     :param data: string_list
@@ -36,7 +36,6 @@ def predict_lr(data):
     :return: np_array of real numbers
     """
     batch = 10
-    dmid_choose = 0
     request_data = {
         "dmids": [],
         "danmaku": [],
@@ -86,7 +85,6 @@ def predict_lr(data):
             print(request_data)
         # print('my_total_0', my_total_0)
     return np.array(my_total_0)
-
 nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh_core_web_sm-3.0.0a0')
 
 '''
@@ -123,11 +121,8 @@ nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh
 
 
 explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=False, use_bert=True)
-
-
 np.random.seed(1)
 text = '生 命 的 真 谛 是 爱'
-print(text)
 pred = explainer.class_names[predict_lr([text] * 10)[0]]
 alternative = explainer.class_names[1 - predict_lr([text] * 10)[0]]
 print('Prediction: %s' % pred)
