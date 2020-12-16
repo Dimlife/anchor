@@ -36,6 +36,8 @@ def send_request(data, dmid_choose=0):
 
     # print(data)
     for i in tqdm(range(len(data) // batch + 1)):
+        print(i)
+        print(len(data))
         cur_data = data[i * batch: (i + 1) * batch]
         if len(cur_data) == 0:
             continue
