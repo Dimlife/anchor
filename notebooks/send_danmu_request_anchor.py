@@ -92,7 +92,7 @@ if __name__ == '__main__':
         input_string = input('输入')
         if input_string == ' ':
             break
-        print(send_request([input_string]))
+        print(send_request([input_string] * 10))
         # print(word_explain(input_string, 0))
         # print(word_explain(input_string, 4))
         # print(word_explain(input_string, 6))
