@@ -71,5 +71,5 @@ def send_request(data, dmid_choose=0):
         # print('my_total_0', my_total_0)
     return np.array(my_total_0)
 
-input = ['你好 陌生人'] * 2
+input = ['你好 陌生人']
 print(send_request(input))
