@@ -25,9 +25,10 @@ def send_request(data):
         "modes": [],
         "progress": [],
         "dur": [],
+        "color": [],
         "report_rate": [],
         "sexes": [],
-        "type": "live"
+        "type": "full"
     }
     my_total_0 = []
     my_total_2 = []
@@ -48,6 +49,7 @@ def send_request(data):
         cur_mode = [1] * len(cur_data)
         cur_progress = [1] * len(cur_data)
         cur_dur = [1] * len(cur_data)
+        cur_color = [1] * len(cur_data)
         request_data['dmids'] = [dmid_choose] * len(cur_data)
         request_data['danmaku'] = cur_msg
         request_data['ctime'] = ctime
@@ -55,17 +57,18 @@ def send_request(data):
         request_data['modes'] = cur_mode
         request_data['progress'] = cur_progress
         request_data['dur'] = cur_dur
+        request_data['color'] = cur_color
         request_data['report_rate'] = report_rate
         request_data['sexes'] = sex
         try:
             f_my8 = requests.post('http://deeplearn.bilibili.co/dl/api/dmscore/v1', json=request_data).json()
             # f_my8 = requests.post('http://localhost:8818/dl/api/dmscore/v1', json=request_data).json()
             print(f_my8)
-            f = f_my8.content.decode('utf-8')
-            print(f)
-            res_json = json.loads(f)
-            print(res_json['scores'])
-            for score in f_my8['score']:
+            # f = f_my8.content.decode('utf-8')
+            # print(f)
+            # res_json = json.loads(f)
+            # print(res_json['scores'])
+            for score in f_my8['scores']:
                 # my_total_0.append([1 - score, score])
                 my_total_0.append(1 if score > 0.67 else 0)
         except json.decoder.JSONDecodeError:
