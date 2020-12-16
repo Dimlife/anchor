@@ -8,7 +8,7 @@ from anchor import anchor_text
 import numpy as np
 
 
-def send_request(data, dmid_choose):
+def send_request(data):
     """
 
     :param data: string_list
@@ -16,6 +16,7 @@ def send_request(data, dmid_choose):
     :return: np_array of real numbers
     """
     batch = 10
+    dmid_choose = 0
     request_data = {
         "dmids": [],
         "danmaku": [],
