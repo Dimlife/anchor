@@ -59,11 +59,10 @@ def send_request(data, dmid_choose):
         try:
             f_my8 = requests.post('http://deeplearn.bilibili.co/dl/api/dmscore/v1', json=request_data).json()
             for score in f_my8['scores']:
-                # my_total_0.append([1 - score, score])
-                my_total_0.append(1 if score > 0.67 else 0)
+                my_total_0.append([1 - score, score])
         except json.decoder.JSONDecodeError:
             print(request_data)
-
+        print('my_total_0', my_total_0)
     return np.array(my_total_0)
 
 
@@ -91,6 +90,6 @@ if __name__ == '__main__':
         input_string = input('输入')
         if input_string == ' ':
             break
-        print(send_request([input_string], 0))
+        print(word_explain(input_string, 0))
         # print(word_explain(input_string, 4))
         # print(word_explain(input_string, 6))
