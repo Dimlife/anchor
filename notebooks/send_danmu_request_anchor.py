@@ -15,7 +15,7 @@ def send_request(data, dmid_choose=0):
     :param dmid_choose: int
     :return: np_array of real numbers
     """
-    batch = 10
+    batch = 1
     request_data = {
         "dmids": [],
         "danmaku": [],
@@ -92,7 +92,7 @@ if __name__ == '__main__':
         input_string = input('输入')
         if input_string == ' ':
             break
-        print(send_request([input_string] * 20))
+        print(send_request([input_string]))
         # print(word_explain(input_string, 0))
         # print(word_explain(input_string, 4))
         # print(word_explain(input_string, 6))
