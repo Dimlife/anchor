@@ -40,6 +40,7 @@ def send_request(data, dmid_choose=0):
         print(len(data))
         cur_data = data[i * batch: (i + 1) * batch]
         print(len(cur_data))
+        print(cur_data)
         if len(cur_data) == 0:
             continue
         sex = [1] * len(cur_data)
