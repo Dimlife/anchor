@@ -38,6 +38,7 @@ class TextGenerator(object):
 
     def unmask(self, text_with_mask):
         print('t', text_with_mask)
+        text_with_mask = text_with_mask.replace(' ', '')
         torch = self.torch
         tokenizer = self.bert_tokenizer
         model = self.bert
