@@ -55,7 +55,8 @@ def predict_lr(texts):
     print(texts)
     return c.predict(vectorizer.transform(texts))
 
-print(predict_lr(['你好 朋友']))
+print(predict_lr(['你好 朋友', '你好 兄弟']))
+print(type(predict_lr(['你好 朋友', '你好 兄弟'])))
 
 # explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=True)
 #
