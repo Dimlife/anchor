@@ -52,6 +52,8 @@ print('Val accuracy', sklearn.metrics.accuracy_score(val_labels, preds))
 def predict_lr(texts):
     return c.predict(vectorizer.transform(texts))
 
+print(predict_lr('你好 朋友'))
+
 # explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=True)
 #
 # np.random.seed(1)
