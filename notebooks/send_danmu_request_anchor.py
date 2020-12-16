@@ -59,7 +59,8 @@ def send_request(data, dmid_choose=0):
         try:
             f_my8 = requests.post('http://deeplearn.bilibili.co/dl/api/dmscore/v1', json=request_data).json()
             for score in f_my8['scores']:
-                my_total_0.append(score > 0.7)
+                my_total_0.append(1 if score > 0.7 else 0)
+                print(score)
         except json.decoder.JSONDecodeError:
             print(request_data)
         print('my_total_0', my_total_0)
@@ -81,6 +82,7 @@ def word_explain(input_str, d_choose):
     explainer = LimeTextExplainer(class_names=['negative', 'positive'])
     input = word_split(input_str)['results'][0]
     send_func = lambda x: send_request(x, dmid_choose=d_choose)
+    print('input', input)
     exp = explainer.explain_instance(input, send_func, num_features=10)
     return list_round(exp.as_list())
 
