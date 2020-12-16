@@ -8,7 +8,7 @@ from anchor import anchor_text
 import numpy as np
 
 
-def send_request(data, dmid_choose):
+def send_request(data, dmid_choose=0):
     """
 
     :param data: string_list
@@ -59,7 +59,7 @@ def send_request(data, dmid_choose):
         try:
             f_my8 = requests.post('http://deeplearn.bilibili.co/dl/api/dmscore/v1', json=request_data).json()
             for score in f_my8['scores']:
-                my_total_0.append([1 - score, score])
+                my_total_0.append(1 if score > 0.7 else 0)
         except json.decoder.JSONDecodeError:
             print(request_data)
         print('my_total_0', my_total_0)
