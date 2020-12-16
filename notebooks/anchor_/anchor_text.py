@@ -9,16 +9,19 @@ import sys
 from io import open
 import numpy as np
 
+
 def id_generator(size=15):
     """Helper function to generate random div ids. This is useful for embedding
     HTML into ipython notebooks."""
     chars = list(string.ascii_uppercase + string.digits)
     return ''.join(np.random.choice(chars, size, replace=True))
 
+
 def exp_normalize(x):
     b = x.max()
     y = np.exp(x - b)
     return y / y.sum()
+
 
 class TextGenerator(object):
     def __init__(self, url=None):
@@ -34,6 +37,7 @@ class TextGenerator(object):
             self.bert.eval()
 
     def unmask(self, text_with_mask):
+        print('t', text_with_mask)
         torch = self.torch
         tokenizer = self.bert_tokenizer
         model = self.bert
@@ -47,11 +51,12 @@ class TextGenerator(object):
         for i in masked:
             v, top_preds = torch.topk(outputs[0, i], 500)
             words = tokenizer.convert_ids_to_tokens(top_preds)
-            print('words in text_generator', words)
+            # print('words in text_generator', words)
             v = np.array([float(x) for x in v])
             ret.append((words, v))
-            print('ret in text_generator', ret)
+            # print('ret in text_generator', ret)
         return ret
+
 
 class SentencePerturber:
     def __init__(self, words, tg, onepass=False):
@@ -68,6 +73,7 @@ class SentencePerturber:
             s = ' '.join(a)
             w, p = self.probs(s)[0]
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
+
     def sample(self, data):
         a = self.array.copy()
         masks = np.where(data == 0)[0]
@@ -92,16 +98,14 @@ class SentencePerturber:
                 self.cache[s] = self.cache[s][:1]
         return self.cache[s]
 
-
     def perturb_sentence(present, n, prob_change=0.5):
         raw = np.zeros((n, len(self.words)), '|U80')
         data = np.ones((n, len(self.words)))
 
 
-
-
 class AnchorText(object):
     """bla"""
+
     def __init__(self, nlp, class_names, use_unk_distribution=True, use_bert=True, mask_string='UNK'):
         """
         Args:
@@ -133,6 +137,7 @@ class AnchorText(object):
         perturber = None
         if not self.use_unk_distribution and self.use_bert:
             perturber = SentencePerturber(words, self.tg, onepass=onepass)
+
         def sample_fn(present, num_samples, compute_labels=True):
             if self.use_unk_distribution:
                 data = np.ones((num_samples, len(words)))
@@ -173,21 +178,22 @@ class AnchorText(object):
             dtype = '|U%d' % (max(80, max_len))
             raw_data = np.array(raw_data, dtype).reshape(-1, 1)
             return raw_data, data, labels
+
         return words, positions, true_label, sample_fn
 
     def explain_instance(self, text, classifier_fn, threshold=0.95,
-                          delta=0.1, tau=0.15, batch_size=10, onepass=False,
-                          use_proba=False, beam_size=4,
-                          **kwargs):
+                         delta=0.1, tau=0.15, batch_size=10, onepass=False,
+                         use_proba=False, beam_size=4,
+                         **kwargs):
         if type(text) == bytes:
             text = text.decode()
         words, positions, true_label, sample_fn = self.get_sample_fn(
-            text, classifier_fn, onepass=onepass, use_proba=use_proba)
+            text, classifier_fn, onepass=onepass, use_proba=use_proba)  # 这里是先采样
         # print words, true_label
         exp = anchor_base.AnchorBaseBeam.anchor_beam(
             sample_fn, delta=delta, epsilon=tau, batch_size=batch_size,
             desired_confidence=threshold, stop_on_first=True,
-            coverage_samples=1, **kwargs)
+            coverage_samples=1, **kwargs)  # Beam搜索
         exp['names'] = [words[x] for x in exp['feature']]
         exp['positions'] = [positions[x] for x in exp['feature']]
         exp['instance'] = text
@@ -204,6 +210,7 @@ class AnchorText(object):
 
         def jsonize(x):
             return json.dumps(x)
+
         this_dir, _ = os.path.split(__file__)
         bundle = open(os.path.join(this_dir, 'bundle.js'), encoding='utf8').read()
         random_id = 'top_div' + id_generator()
