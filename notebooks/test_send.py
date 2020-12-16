@@ -39,8 +39,9 @@ def send_request(data, dmid_choose=0):
         print(i)
         print(len(data))
         cur_data = data[i * batch: (i + 1) * batch]
-        print(len(cur_data))
-        print(cur_data)
+        if len(cur_data) == 1:
+            my_total_0.append(send_request([cur_data[0]] * 2, dmid_choose)[0])
+            continue
         if len(cur_data) == 0:
             continue
         sex = [1] * len(cur_data)
