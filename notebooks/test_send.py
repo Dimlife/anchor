@@ -15,7 +15,7 @@ def send_request(data, dmid_choose=0):
     :param dmid_choose: int
     :return: np_array of real numbers
     """
-    batch = 10
+    batch = 2000
     request_data = {
         "dmids": [],
         "danmaku": [],
