@@ -25,14 +25,14 @@ def exp_normalize(x):
 
 class TextGenerator(object):
     def __init__(self, url=None):
-        from transformers import DistilBertForMaskedLM, DistilBertTokenizer
+        from transformers import BertForMaskedLM, BertTokenizer
         import torch
         self.torch = torch
         self.url = url
         if url is None:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            self.bert_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-chinese')
-            self.bert = DistilBertForMaskedLM.from_pretrained('distilbert-base-chinese')
+            self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-chinese')
+            self.bert = BertForMaskedLM.from_pretrained('bert-base-chinese')
             self.bert.to(self.device)
             self.bert.eval()
 
