@@ -31,8 +31,8 @@ class TextGenerator(object):
         self.url = url
         if url is None:
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-chinese')
-            self.bert = BertForMaskedLM.from_pretrained('bert-base-chinese')
+            self.bert_tokenizer = BertTokenizer.from_pretrained('chinese-bert-wwm')
+            self.bert = BertForMaskedLM.from_pretrained('chinese-bert-wwm')
             self.bert.to(self.device)
             self.bert.eval()
 
