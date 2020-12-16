@@ -60,6 +60,11 @@ def send_request(data):
         try:
             f_my8 = requests.post('http://deeplearn.bilibili.co/dl/api/dmscore/v1', json=request_data).json()
             # f_my8 = requests.post('http://localhost:8818/dl/api/dmscore/v1', json=request_data).json()
+            print(f_my8)
+            f = f_my8.content.decode('utf-8')
+            print(f)
+            res_json = json.loads(f)
+            print(res_json['scores'])
             for score in f_my8['score']:
                 # my_total_0.append([1 - score, score])
                 my_total_0.append(1 if score > 0.67 else 0)
