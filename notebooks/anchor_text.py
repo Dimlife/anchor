@@ -50,6 +50,9 @@ c.fit(train_vectors, train_labels)
 preds = c.predict(val_vectors)
 print('Val accuracy', sklearn.metrics.accuracy_score(val_labels, preds))
 def predict_lr(texts):
+    # 输入为 string 的 list
+    # 输出为 0/1    的 list
+    print(texts)
     return c.predict(vectorizer.transform(texts))
 
 print(predict_lr(['你好 朋友']))
@@ -131,7 +134,7 @@ print('Examples where anchor applies and model predicts %s:' % alternative)
 print()
 print('\n'.join([x[0] for x in exp.examples(only_different_prediction=True)]))
 
-#
+
 # print('Partial anchor: %s' % (' AND '.join(exp.names(0))))
 # print('Precision: %.2f' % exp.precision(0))
 # print()
@@ -142,7 +145,7 @@ print('\n'.join([x[0] for x in exp.examples(only_different_prediction=True)]))
 # print('Examples where anchor applies and model predicts %s:' % alternative)
 # print()
 # print('\n'.join([x[0] for x in exp.examples(partial_index=0, only_different_prediction=True)]))
-#
+
 #
 # np.random.seed(1)
 # text = 'This is a good book .'

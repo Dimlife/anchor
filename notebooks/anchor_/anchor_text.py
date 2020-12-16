@@ -51,10 +51,10 @@ class TextGenerator(object):
         for i in masked:
             v, top_preds = torch.topk(outputs[0, i], 500)
             words = tokenizer.convert_ids_to_tokens(top_preds)
-            print('words in text_generator', words)
+            # print('words in text_generator', words)
             v = np.array([float(x) for x in v])
             ret.append((words, v))
-            print('ret in text_generator', ret)
+            # print('ret in text_generator', ret)
         return ret
 
 
