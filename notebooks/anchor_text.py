@@ -52,6 +52,7 @@ print('Val accuracy', sklearn.metrics.accuracy_score(val_labels, preds))
 def predict_lr(texts):
     # 输入为 string 的 list
     # 输出为 0/1    的 list
+    texts = [text.replace(' ', '') for text in texts]
     print(texts)
     return c.predict(vectorizer.transform(texts))
 
