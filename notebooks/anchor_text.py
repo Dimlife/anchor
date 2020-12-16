@@ -60,7 +60,7 @@ def predict_lr(data, dmid_choose=0):
         print(len(data))
         cur_data = data[i * batch: (i + 1) * batch]
         if len(cur_data) == 1:
-            my_total_0.append(send_request([cur_data[0]] * 2, dmid_choose)[0])
+            my_total_0.append(predict_lr([cur_data[0]] * 2, dmid_choose)[0])
             continue
         if len(cur_data) == 0:
             continue
