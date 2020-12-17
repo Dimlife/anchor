@@ -84,7 +84,7 @@ class SentencePerturber:
         masks = np.where(data == 0)[0]
         masks_length = [len(a[mask]) for mask in masks]
         a = [[_ for _ in word] for word in a]
-        a[data != 1] = [self.mask] * len(a[data != 1])
+        a[data != 1] = [self.mask for _ in range(len(a[data != 1]))]
         if self.onepass:
             # s = ' '.join(a)
             s = letters2words(a)
