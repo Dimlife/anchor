@@ -56,8 +56,6 @@ def predict_lr(data, dmid_choose=0):
 
     # print(data)
     for i in tqdm(range(len(data) // batch + 1)):
-        print(i)
-        print(len(data))
         cur_data = data[i * batch: (i + 1) * batch]
         if len(cur_data) == 1:
             my_total_0.append(predict_lr([cur_data[0]] * 2, dmid_choose)[0])

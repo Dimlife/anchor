@@ -195,9 +195,7 @@ class AnchorText(object):
         words, positions, true_label, sample_fn = self.get_sample_fn(
             text, classifier_fn, onepass=onepass, use_proba=use_proba)
         print('1111111111', words, true_label)
-        with open('test.txt') as f:
-            for word in words:
-                f.write(str(word))
+        return
         exp = anchor_base.AnchorBaseBeam.anchor_beam(
             sample_fn, delta=delta, epsilon=tau, batch_size=batch_size,
             desired_confidence=threshold, stop_on_first=True,
