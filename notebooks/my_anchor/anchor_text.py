@@ -73,10 +73,13 @@ class SentencePerturber:
         self.onepass = onepass
         self.pr = np.zeros(len(self.words))
         for i in range(len(words)):
-            a = self.array.copy()
-            a[i] = self.mask # TODO:
-            s = ' '.join(a)
-            w, p = self.probs(s)[0]
+            a = list(self.array.copy())
+            length = len(a[i])
+            a[i] = [self.mask] * length  # TODO:
+            for j in range(length):
+                s = letters2words(a)
+                w, p = self.probs(s)[0]
+                a[i][j] = w
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
 
     def sample(self, data):
