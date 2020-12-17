@@ -99,7 +99,7 @@ class SentencePerturber:
                     s = letters2words(a)
                     words, probs = self.probs(s)[0]
                     a[i][j] = np.random.choice(words, p=probs)
-        return a
+        return np.array([''.join(word) for word in a])
 
     def probs(self, s):
         if s not in self.cache:
