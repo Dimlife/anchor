@@ -176,11 +176,25 @@ class AnchorText(object):
                           delta=0.1, tau=0.15, batch_size=10, onepass=False,
                           use_proba=False, beam_size=4,
                           **kwargs):
+        """
+        解释函数
+        :param text:
+        :param classifier_fn:
+        :param threshold:
+        :param delta:
+        :param tau:
+        :param batch_size:
+        :param onepass:
+        :param use_proba:
+        :param beam_size:
+        :param kwargs:
+        :return:
+        """
         if type(text) == bytes:
             text = text.decode()
         words, positions, true_label, sample_fn = self.get_sample_fn(
             text, classifier_fn, onepass=onepass, use_proba=use_proba)
-        # print words, true_label
+        print('1111111111', words, true_label)
         exp = anchor_base.AnchorBaseBeam.anchor_beam(
             sample_fn, delta=delta, epsilon=tau, batch_size=batch_size,
             desired_confidence=threshold, stop_on_first=True,
