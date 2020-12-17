@@ -89,7 +89,7 @@ def predict_lr(data, dmid_choose=0):
         # print('my_total_0', my_total_0)
     return np.array(my_total_0)
 
-nlp = spacy.load('/home/jinzhiyu/my_anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh_core_web_sm-3.0.0a0')
+nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh_core_web_sm-3.0.0a0')
 
 '''
 # data, labels = ['你好 上海', '你好 杨浦', '你好 北京', '你不好好 哥哥', '你好 菜鸟', '你好 不夜城', '你不好 不夜城', '你不好 哥', '你不好 背景'], [1, 1, 1, 0, 1, 1, 0, 0, 0]
