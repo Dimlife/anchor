@@ -59,6 +59,10 @@ class TextGenerator(object):
         return ret
 
 
+def letters2words(tokens):
+    return ' '.join([''.join(token) for token in tokens])
+
+
 class SentencePerturber:
     def __init__(self, words, tg, onepass=False):
         self.tg = tg
@@ -70,7 +74,7 @@ class SentencePerturber:
         self.pr = np.zeros(len(self.words))
         for i in range(len(words)):
             a = self.array.copy()
-            a[i] = ' '.join([self.mask] * len(a[i]))
+            a[i] = ''.join([self.mask] * len(a[i]))
             s = ' '.join(a)
             w, p = self.probs(s)[0]
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
@@ -78,17 +82,22 @@ class SentencePerturber:
     def sample(self, data):
         a = self.array.copy()
         masks = np.where(data == 0)[0]
-        a[data != 1] = ' '.join([self.mask] * len(a[data != 1]))
+        masks_length = [len(a[mask]) for mask in masks]
+        a = [[_ for _ in word] for word in a]
+        a[data != 1] = [self.mask] * len(a[data != 1])
         if self.onepass:
-            s = ' '.join(a)
+            # s = ' '.join(a)
+            s = letters2words(a)
             rs = self.probs(s)
             reps = [np.random.choice(a, p=p) for a, p in rs]
             a[masks] = reps
         else:
-            for i in masks:
-                s = ' '.join(a)
-                words, probs = self.probs(s)[0]
-                a[i] = np.random.choice(words, p=probs)
+            for i, i_len in zip(masks, masks_length):
+                for j in range(i_len):
+                    # s = ' '.join(a)
+                    s = letters2words(a)
+                    words, probs = self.probs(s)[0]
+                    a[i][j] = np.random.choice(words, p=probs)
         return a
 
     def probs(self, s):
