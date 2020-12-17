@@ -8,7 +8,7 @@ import sklearn.ensemble
 import spacy
 import sys
 from sklearn.feature_extraction.text import CountVectorizer
-from anchor_ import anchor_text
+from my_anchor import anchor_text
 import requests
 import json
 from tqdm import tqdm
@@ -89,7 +89,7 @@ def predict_lr(data, dmid_choose=0):
         # print('my_total_0', my_total_0)
     return np.array(my_total_0)
 
-nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh_core_web_sm-3.0.0a0')
+nlp = spacy.load('/home/jinzhiyu/my_anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh_core_web_sm-3.0.0a0')
 
 '''
 # data, labels = ['你好 上海', '你好 杨浦', '你好 北京', '你不好好 哥哥', '你好 菜鸟', '你好 不夜城', '你不好 不夜城', '你不好 哥', '你不好 背景'], [1, 1, 1, 0, 1, 1, 0, 0, 0]
@@ -138,10 +138,10 @@ print('Time: %s' % (time.time() - b))
 print('Anchor: %s' % (' AND '.join(exp.names())))
 print('Precision: %.2f' % exp.precision())
 print()
-print('Examples where anchor applies and model predicts %s:' % pred)
+print('Examples where my_anchor applies and model predicts %s:' % pred)
 print()
 print('\n'.join([x[0] for x in exp.examples(only_same_prediction=True)]))
 print()
-print('Examples where anchor applies and model predicts %s:' % alternative)
+print('Examples where my_anchor applies and model predicts %s:' % alternative)
 print()
 print('\n'.join([x[0] for x in exp.examples(only_different_prediction=True)]))

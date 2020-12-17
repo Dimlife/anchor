@@ -190,7 +190,8 @@ class AnchorText(object):
             text = text.decode()
         words, positions, true_label, sample_fn = self.get_sample_fn(
             text, classifier_fn, onepass=onepass, use_proba=use_proba)  # 这里是先采样
-        # print words, true_label
+        print(words, true_label)
+        return
         exp = anchor_base.AnchorBaseBeam.anchor_beam(
             sample_fn, delta=delta, epsilon=tau, batch_size=batch_size,
             desired_confidence=threshold, stop_on_first=True,
@@ -255,7 +256,7 @@ class AnchorText(object):
         <script>
             div = d3.select("#{random_id}");
             lime.RenderExplanationFrame(div,{label_names}, {predict_proba},
-            {true_class}, {explanation}, {raw_data}, "text", "anchor");
+            {true_class}, {explanation}, {raw_data}, "text", "my_anchor");
         </script>'''.format(random_id=random_id,
                             label_names=jsonize(self.class_names),
                             predict_proba=jsonize(list(predict_proba)),

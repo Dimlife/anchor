@@ -11,10 +11,10 @@ class AnchorExplanation:
 
     def names(self, partial_index=None):
         """
-        Returns a list of the names of the anchor conditions.
+        Returns a list of the names of the my_anchor conditions.
         Args:
-            partial_index (int): lets you get the anchor until a certain index.
-            For example, if the anchor is (A=1,B=2,C=2) and partial_index=1,
+            partial_index (int): lets you get the my_anchor until a certain index.
+            For example, if the my_anchor is (A=1,B=2,C=2) and partial_index=1,
             this will return ["A=1", "B=2"]
         """
         names = self.exp_map['names']
@@ -24,10 +24,10 @@ class AnchorExplanation:
 
     def features(self, partial_index=None):
         """
-        Returns a list of the features used in the anchor conditions.
+        Returns a list of the features used in the my_anchor conditions.
         Args:
-            partial_index (int): lets you get the anchor until a certain index.
-            For example, if the anchor uses features (1, 2, 3) and
+            partial_index (int): lets you get the my_anchor until a certain index.
+            For example, if the my_anchor uses features (1, 2, 3) and
             partial_index=1, this will return [1, 2]
         """
         features = self.exp_map['feature']
@@ -37,10 +37,10 @@ class AnchorExplanation:
 
     def precision(self, partial_index=None):
         """
-        Returns the anchor precision (a float)
+        Returns the my_anchor precision (a float)
         Args:
-            partial_index (int): lets you get the anchor precision until a
-            certain index. For example, if the anchor has precisions
+            partial_index (int): lets you get the my_anchor precision until a
+            certain index. For example, if the my_anchor has precisions
             [0.1, 0.5, 0.95] and partial_index=1, this will return 0.5
         """
         precision = self.exp_map['precision']
@@ -53,10 +53,10 @@ class AnchorExplanation:
 
     def coverage(self, partial_index=None):
         """
-        Returns the anchor coverage (a float)
+        Returns the my_anchor coverage (a float)
         Args:
-            partial_index (int): lets you get the anchor coverage until a
-            certain index. For example, if the anchor has coverages
+            partial_index (int): lets you get the my_anchor coverage until a
+            certain index. For example, if the my_anchor has coverages
             [0.1, 0.5, 0.95] and partial_index=1, this will return 0.5
         """
         coverage = self.exp_map['coverage']
@@ -70,16 +70,16 @@ class AnchorExplanation:
     def examples(self, only_different_prediction=False,
                  only_same_prediction=False, partial_index=None):
         """
-        Returns examples covered by the anchor.
+        Returns examples covered by the my_anchor.
         Args:
             only_different_prediction(bool): if true, will only return examples
-            where the anchor  makes a different prediction than the original
+            where the my_anchor  makes a different prediction than the original
             model
             only_same_prediction(bool): if true, will only return examples
-            where the anchor makes the same prediction than the original
+            where the my_anchor makes the same prediction than the original
             model
             partial_index (int): lets you get the examples from the partial
-            anchor until a certain index.
+            my_anchor until a certain index.
         """
         if only_different_prediction and only_same_prediction:
             print('Error: you can\'t have only_different_prediction \
