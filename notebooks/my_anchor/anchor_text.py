@@ -74,7 +74,7 @@ class SentencePerturber:
         self.pr = np.zeros(len(self.words))
         for i in range(len(words)):
             a = self.array.copy()
-            a[i] = ''.join([self.mask] * len(a[i]))
+            a[i] = self.mask
             s = ' '.join(a)
             w, p = self.probs(s)[0]
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
