@@ -126,7 +126,7 @@ nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh
 
 explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=False, use_bert=True)
 np.random.seed(1)
-text = '前 方 高 能 预 警'
+text = '前方 高能 预警'
 print(explainer.class_names[0])
 pred = explainer.class_names[int(predict_lr([text] * 10)[0])]
 alternative = explainer.class_names[1 - predict_lr([text] * 10)[0]]

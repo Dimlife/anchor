@@ -70,7 +70,7 @@ class SentencePerturber:
         self.pr = np.zeros(len(self.words))
         for i in range(len(words)):
             a = self.array.copy()
-            a[i] = self.mask
+            a[i] = self.mask * len(a[i])
             s = ' '.join(a)
             w, p = self.probs(s)[0]
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
@@ -78,7 +78,7 @@ class SentencePerturber:
     def sample(self, data):
         a = self.array.copy()
         masks = np.where(data == 0)[0]
-        a[data != 1] = self.mask
+        a[data != 1] = self.mask * len(a[data != 1])
         if self.onepass:
             s = ' '.join(a)
             rs = self.probs(s)
@@ -190,8 +190,6 @@ class AnchorText(object):
             text = text.decode()
         words, positions, true_label, sample_fn = self.get_sample_fn(
             text, classifier_fn, onepass=onepass, use_proba=use_proba)  # 这里是先采样
-        print(words, true_label)
-        return
         exp = anchor_base.AnchorBaseBeam.anchor_beam(
             sample_fn, delta=delta, epsilon=tau, batch_size=batch_size,
             desired_confidence=threshold, stop_on_first=True,
