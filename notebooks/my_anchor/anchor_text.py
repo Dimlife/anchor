@@ -51,17 +51,17 @@ class TextGenerator(object):
             outputs = model(to_pred)[0]
             print('outputs', outputs.shape, outputs)
         # 多字一起
-        ret = {}
+        ret = []
         for i in masked:
-            if i not in ret:
-                ret[i] = []
+            # if i not in ret:
+            #     ret[i] = []
             # 获得500个最大结果值 v为值 top_preds为下标
             # 最终的结果返回的是[([词]，[概率值])] - 会在probs函数之中做归一
             v, top_preds = torch.topk(outputs[0, i], 500)
             words = tokenizer.convert_ids_to_tokens(top_preds)
             # print('words in text_generator', words)
             v = np.array([float(x) for x in v])
-            ret[i].append((words, v))
+            ret.append((words, v))
             # print('ret in text_generator', ret)
         """     
         # 单字单字
