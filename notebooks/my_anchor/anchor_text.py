@@ -83,6 +83,11 @@ def letters2words(tokens):
     return ' '.join([''.join(token) for token in tokens])
 
 
+def np_mask(array, i):
+    ans = list(array)
+    ans[i] = np.array(['[MASK]'] * len(ans[i]))
+    return np.array(ans)
+
 class SentencePerturber:
     def __init__(self, words, tg, onepass=False):
         self.tg = tg
@@ -97,7 +102,7 @@ class SentencePerturber:
             # 需要从原版本修改格式
             a = self.array.copy()
             a = np.array([[_ for _ in word] for word in a])
-            a[i] = np.array([self.mask] * len(a[i]))
+            a = np_mask(a, i)
             s = letters2words(a)
             # a[i] = self.mask
             # s = ' '.join(a)
@@ -110,7 +115,7 @@ class SentencePerturber:
         masks_length = [len(a[mask]) for mask in masks]
         a = np.array([[_ for _ in word] for word in a])
         for i in masks:
-            a[i] = np.array([self.mask] * len(a[i]))
+            a = np_mask(a, i)
         if self.onepass:
             # s = ' '.join(a)
             s = letters2words(a)
