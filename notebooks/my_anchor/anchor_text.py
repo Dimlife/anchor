@@ -72,9 +72,13 @@ class TextGenerator(object):
         # 最终的结果返回的是[([词]，[概率值])] - 会在probs函数之中做归一
         v, top_preds = torch.topk(outputs[0, i], 500)
         words = tokenizer.convert_ids_to_tokens(top_preds)
+        words_chinese_mask = []
+        for i in range(len(words)):
+            if '\u4e00' <= words[i][0] <= '\u9fa5':
+              words_chinese_mask.append(i)
         # print('words in text_generator', words)
         v = np.array([float(x) for x in v])
-        ret.append((words, v))
+        ret.append((words[words_chinese_mask], v[words_chinese_mask]))
         # print('ret in text_generator', ret)
         return ret
 
@@ -216,12 +220,17 @@ class AnchorText(object):
             else:
                 if self.use_bert:
                     data = np.zeros((num_samples, len(words)))
+                    not_chinese = []
                     for i in range(len(words)):
                         if i in present:
                             continue
+                        # 限定了非中文字符就不变换 每个token第一个字符若非中文则不变换
+                        if not '\u4e00' <= words[i][0] <= '\u9fa5':
+                            not_chinese.append(i)
                         probs = [1 - perturber.pr[i], perturber.pr[i]]
                         data[:, i] = np.random.choice([0, 1], num_samples, p=probs)
                     data[:, present] = 1
+                    data[:, not_chinese] = 1
                     raw_data = []
                     for i, d in enumerate(data):
                         r = perturber.sample(d)
