@@ -74,7 +74,7 @@ class SentencePerturber:
         self.pr = np.zeros(len(self.words))
         for i in range(len(words)):
             a = self.array.copy()
-            a[i] = self.mask # TODO:
+            a[i] = self.mask
             s = ' '.join(a)
             w, p = self.probs(s)[0]
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
@@ -83,9 +83,9 @@ class SentencePerturber:
         a = self.array.copy()
         masks = np.where(data == 0)[0]
         masks_length = [len(a[mask]) for mask in masks]
-        b = [[_ for _ in word] for word in a]
+        a = np.array([[_ for _ in word] for word in a])
         for i in masks:
-            b[i] = [self.mask] * masks_length[i]
+            a[i] = np.array([self.mask] * len(a[i]))
         if self.onepass:
             # s = ' '.join(a)
             s = letters2words(a)
@@ -96,10 +96,11 @@ class SentencePerturber:
             for i, i_len in zip(masks, masks_length):
                 for j in range(i_len):
                     # s = ' '.join(a)
-                    s = letters2words(b)
+                    s = letters2words(a)
+                    print('s', s)
                     words, probs = self.probs(s)[0]
-                    b[i][j] = np.random.choice(words, p=probs)
-        return np.array([''.join(word) for word in b])
+                    a[i][j] = np.random.choice(words, p=probs)
+        return np.array([''.join(word) for word in a])
 
     def probs(self, s):
         if s not in self.cache:
