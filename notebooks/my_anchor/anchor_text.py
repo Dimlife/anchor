@@ -89,14 +89,14 @@ class SentencePerturber:
         self.words = words
         self.cache = {}
         self.mask = self.tg.bert_tokenizer.mask_token
-        # self.array = np.array(words, '|U80')
-        self.array = np.array([[_ for _ in word] for word in words])
+        self.array = np.array(words, '|U80')
+        # self.array = np.array([[_ for _ in word] for word in words])
         self.onepass = onepass
         self.pr = np.zeros(len(self.words))
         for i in range(len(words)):
             # 需要从原版本修改格式
             a = self.array.copy()
-            a[i] = np.array([self.mask] * len(a[i]))
+            a = np.array([[_ for _ in word] for word in a])
             s = letters2words(a)
             # a[i] = self.mask
             # s = ' '.join(a)
@@ -107,7 +107,7 @@ class SentencePerturber:
         a = self.array.copy()
         masks = np.where(data == 0)[0]
         masks_length = [len(a[mask]) for mask in masks]
-        # a = np.array([[_ for _ in word] for word in a])
+        a = np.array([[_ for _ in word] for word in a])
         for i in masks:
             a[i] = np.array([self.mask] * len(a[i]))
         if self.onepass:
