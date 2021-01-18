@@ -130,6 +130,7 @@ class SentencePerturber:
                     print('s', s)
                     words, probs = self.probs(s)[0]
                     a[i][j] = np.random.choice(words, p=probs)
+                    print('a', a[i][j])
         return np.array([''.join(word) for word in a])
 
     # sample函数需要考虑各个词段的长度
