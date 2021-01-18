@@ -50,15 +50,24 @@ class TextGenerator(object):
         with torch.no_grad():
             outputs = model(to_pred)[0]
         ret = []
-        for i in masked:
-            # 获得500个最大结果值 v为值 top_preds为下标
-            # 最终的结果返回的是[([词]，[概率值])] - 会在probs函数之中做归一
-            v, top_preds = torch.topk(outputs[0, i], 500)
-            words = tokenizer.convert_ids_to_tokens(top_preds)
-            # print('words in text_generator', words)
-            v = np.array([float(x) for x in v])
-            ret.append((words, v))
-            # print('ret in text_generator', ret)
+        # for i in masked:
+        #     # 获得500个最大结果值 v为值 top_preds为下标
+        #     # 最终的结果返回的是[([词]，[概率值])] - 会在probs函数之中做归一
+        #     v, top_preds = torch.topk(outputs[0, i], 500)
+        #     words = tokenizer.convert_ids_to_tokens(top_preds)
+        #     # print('words in text_generator', words)
+        #     v = np.array([float(x) for x in v])
+        #     ret.append((words, v))
+        #     # print('ret in text_generator', ret)
+        i = masked[0]
+        # 获得500个最大结果值 v为值 top_preds为下标
+        # 最终的结果返回的是[([词]，[概率值])] - 会在probs函数之中做归一
+        v, top_preds = torch.topk(outputs[0, i], 500)
+        words = tokenizer.convert_ids_to_tokens(top_preds)
+        # print('words in text_generator', words)
+        v = np.array([float(x) for x in v])
+        ret.append((words, v))
+        # print('ret in text_generator', ret)
         return ret
 
 
