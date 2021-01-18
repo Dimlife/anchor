@@ -45,6 +45,7 @@ class TextGenerator(object):
         encoded = np.array(tokenizer.encode(text_with_mask, add_special_tokens=True))
         input_ids = torch.tensor(encoded)
         masked = (input_ids == self.bert_tokenizer.mask_token_id).numpy().nonzero()[0]
+        print('masked:', masked)
         to_pred = torch.tensor([encoded], device=self.device)
         with torch.no_grad():
             outputs = model(to_pred)[0]
@@ -79,28 +80,43 @@ class SentencePerturber:
             w, p = self.probs(s)[0]
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
 
+    # def sample(self, data):
+    #     a = self.array.copy()
+    #     masks = np.where(data == 0)[0]
+    #     masks_length = [len(a[mask]) for mask in masks]
+    #     a = np.array([[_ for _ in word] for word in a])
+    #     for i in masks:
+    #         a[i] = np.array([self.mask] * len(a[i]))
+    #     if self.onepass:
+    #         # s = ' '.join(a)
+    #         s = letters2words(a)
+    #         rs = self.probs(s)
+    #         reps = [np.random.choice(a, p=p) for a, p in rs]
+    #         a[masks] = reps
+    #     else:
+    #         for i, i_len in zip(masks, masks_length):
+    #             for j in range(i_len):
+    #                 # s = ' '.join(a)
+    #                 s = letters2words(a)
+    #                 print('s', s)
+    #                 words, probs = self.probs(s)[0]
+    #                 a[i][j] = np.random.choice(words, p=probs)
+    #     return np.array([''.join(word) for word in a])
     def sample(self, data):
         a = self.array.copy()
         masks = np.where(data == 0)[0]
-        masks_length = [len(a[mask]) for mask in masks]
-        a = np.array([[_ for _ in word] for word in a])
-        for i in masks:
-            a[i] = np.array([self.mask] * len(a[i]))
+        a[data != 1] = self.mask
         if self.onepass:
-            # s = ' '.join(a)
-            s = letters2words(a)
+            s = ''.join(a)
             rs = self.probs(s)
             reps = [np.random.choice(a, p=p) for a, p in rs]
             a[masks] = reps
         else:
-            for i, i_len in zip(masks, masks_length):
-                for j in range(i_len):
-                    # s = ' '.join(a)
-                    s = letters2words(a)
-                    print('s', s)
-                    words, probs = self.probs(s)[0]
-                    a[i][j] = np.random.choice(words, p=probs)
-        return np.array([''.join(word) for word in a])
+            for i in masks:
+                s = ''.join(a)
+                words, probs = self.probs(s)[0]
+                a[i] = np.random.choice(words, p=probs)
+        return a
 
     def probs(self, s):
         if s not in self.cache:
