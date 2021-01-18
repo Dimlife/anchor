@@ -51,6 +51,8 @@ class TextGenerator(object):
             outputs = model(to_pred)[0]
         ret = []
         for i in masked:
+            # 获得500个最大结果值 v为值 top_preds为下标
+            # 最终的结果返回的是[([词]，[概率值])] - 会在probs函数之中做归一
             v, top_preds = torch.topk(outputs[0, i], 500)
             words = tokenizer.convert_ids_to_tokens(top_preds)
             # print('words in text_generator', words)
@@ -80,43 +82,46 @@ class SentencePerturber:
             w, p = self.probs(s)[0]
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
 
-    # def sample(self, data):
-    #     a = self.array.copy()
-    #     masks = np.where(data == 0)[0]
-    #     masks_length = [len(a[mask]) for mask in masks]
-    #     a = np.array([[_ for _ in word] for word in a])
-    #     for i in masks:
-    #         a[i] = np.array([self.mask] * len(a[i]))
-    #     if self.onepass:
-    #         # s = ' '.join(a)
-    #         s = letters2words(a)
-    #         rs = self.probs(s)
-    #         reps = [np.random.choice(a, p=p) for a, p in rs]
-    #         a[masks] = reps
-    #     else:
-    #         for i, i_len in zip(masks, masks_length):
-    #             for j in range(i_len):
-    #                 # s = ' '.join(a)
-    #                 s = letters2words(a)
-    #                 print('s', s)
-    #                 words, probs = self.probs(s)[0]
-    #                 a[i][j] = np.random.choice(words, p=probs)
-    #     return np.array([''.join(word) for word in a])
     def sample(self, data):
         a = self.array.copy()
         masks = np.where(data == 0)[0]
-        a[data != 1] = self.mask
+        masks_length = [len(a[mask]) for mask in masks]
+        a = np.array([[_ for _ in word] for word in a])
+        for i in masks:
+            a[i] = np.array([self.mask] * len(a[i]))
         if self.onepass:
-            s = ''.join(a)
+            # s = ' '.join(a)
+            s = letters2words(a)
             rs = self.probs(s)
             reps = [np.random.choice(a, p=p) for a, p in rs]
             a[masks] = reps
         else:
-            for i in masks:
-                s = ''.join(a)
-                words, probs = self.probs(s)[0]
-                a[i] = np.random.choice(words, p=probs)
-        return a
+            for i, i_len in zip(masks, masks_length):
+                for j in range(i_len):
+                    # s = ' '.join(a)
+                    s = letters2words(a)
+                    print('s', s)
+                    words, probs = self.probs(s)[0]
+                    a[i][j] = np.random.choice(words, p=probs)
+        return np.array([''.join(word) for word in a])
+
+    # sample函数需要考虑各个词段的长度
+
+    # def sample(self, data):
+    #     a = self.array.copy()
+    #     masks = np.where(data == 0)[0]
+    #     a[data != 1] = self.mask
+    #     if self.onepass:
+    #         s = ''.join(a)
+    #         rs = self.probs(s)
+    #         reps = [np.random.choice(a, p=p) for a, p in rs]
+    #         a[masks] = reps
+    #     else:
+    #         for i in masks:
+    #             s = ''.join(a)
+    #             words, probs = self.probs(s)[0]
+    #             a[i] = np.random.choice(words, p=probs)
+    #     return a
 
     def probs(self, s):
         if s not in self.cache:
