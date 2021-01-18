@@ -127,7 +127,7 @@ nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh
 
 explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=False, use_bert=True)
 np.random.seed(1)
-text = '人生 的 意义 是 美'
+text = '我 爱 你 也 特别 喜欢 你 想 和 你 一直 在 一起'
 print(explainer.class_names[0])
 pred = explainer.class_names[int(predict_lr([text] * 10)[0])]
 alternative = explainer.class_names[1 - predict_lr([text] * 10)[0]]
