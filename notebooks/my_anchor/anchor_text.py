@@ -50,6 +50,7 @@ class TextGenerator(object):
         with torch.no_grad():
             outputs = model(to_pred)[0]
             print('outputs', outputs.shape, outputs)
+        """
         # 多字一起
         ret = []
         for i in masked:
@@ -75,7 +76,6 @@ class TextGenerator(object):
         v = np.array([float(x) for x in v])
         ret.append((words, v))
         # print('ret in text_generator', ret)
-        """
         return ret
 
 
