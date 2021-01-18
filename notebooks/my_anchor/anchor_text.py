@@ -64,7 +64,7 @@ class TextGenerator(object):
             v = np.array([float(x) for x in v])
             ret.append((words, v))
             # print('ret in text_generator', ret)
-        """     
+        """
         # 单字单字
         ret = []
         i = masked[0]
@@ -73,12 +73,14 @@ class TextGenerator(object):
         v, top_preds = torch.topk(outputs[0, i], 500)
         words = tokenizer.convert_ids_to_tokens(top_preds)
         words_chinese_mask = []
+        words_mask = []
         for i in range(len(words)):
             if '\u4e00' <= words[i][0] <= '\u9fa5':
-              words_chinese_mask.append(i)
+                words_chinese_mask.append(i)
+                words_mask.append(words[i])
         # print('words in text_generator', words)
         v = np.array([float(x) for x in v])
-        ret.append((words[words_chinese_mask], v[words_chinese_mask]))
+        ret.append((words_mask, v[words_chinese_mask]))
         # print('ret in text_generator', ret)
         return ret
 
@@ -91,6 +93,7 @@ def np_mask(array, i):
     ans = list(array)
     ans[i] = np.array(['[MASK]'] * len(ans[i]))
     return np.array(ans)
+
 
 class SentencePerturber:
     def __init__(self, words, tg, onepass=False):
