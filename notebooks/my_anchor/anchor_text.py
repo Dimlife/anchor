@@ -97,6 +97,7 @@ class SentencePerturber:
             # 需要从原版本修改格式
             a = self.array.copy()
             a = np.array([[_ for _ in word] for word in a])
+            a[i] = np.array([self.mask] * len(a[i]))
             s = letters2words(a)
             # a[i] = self.mask
             # s = ' '.join(a)
