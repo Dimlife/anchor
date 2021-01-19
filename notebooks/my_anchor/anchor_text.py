@@ -8,6 +8,7 @@ import string
 import sys
 from io import open
 import numpy as np
+from langconv import *
 
 
 def id_generator(size=15):
@@ -22,6 +23,9 @@ def exp_normalize(x):
     y = np.exp(x - b)
     return y / y.sum()
 
+def tradition2simple(line):
+    # 将繁体转换成简体
+    return Converter('zh-hans').convert(line)
 
 class TextGenerator(object):
     def __init__(self, url=None):
@@ -77,7 +81,7 @@ class TextGenerator(object):
         for i in range(len(words)):
             if '\u4e00' <= words[i][0] <= '\u9fa5':
                 words_chinese_mask.append(i)
-                words_mask.append(words[i])
+                words_mask.append(tradition2simple(words[i]))
         # print('words in text_generator', words)
         v = np.array([float(x) for x in v])
         ret.append((words_mask, v[words_chinese_mask]))
