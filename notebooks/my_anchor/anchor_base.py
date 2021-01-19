@@ -250,7 +250,7 @@ class AnchorBaseBeam(object):
                     min_shared_samples=0, desired_confidence=1, beam_size=4,
                     verbose=False, epsilon_stop=0.05, min_samples_start=0,
                     max_anchor_size=None, verbose_every=1,
-                    stop_on_first=False, coverage_samples=50000):
+                    stop_on_first=False, coverage_samples=10000):
         anchor = {'feature': [], 'mean': [], 'precision': [],
                   'coverage': [], 'examples': [], 'all_precision': 0}
         _, coverage_data, _ = sample_fn([], coverage_samples, compute_labels=False)
