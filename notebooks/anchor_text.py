@@ -127,12 +127,12 @@ nlp = spacy.load('/home/jinzhiyu/anchor/zh_core_web_sm-3.0.0a0/zh_core_web_sm/zh
 
 explainer = anchor_text.AnchorText(nlp, ['negative', 'positive'], use_unk_distribution=False, use_bert=True)
 np.random.seed(1)
-text = '老 子 爱 死 你 了 大 笨 蛋'
+text = '《 你 好 好 啊 我 好 喜 欢 》'
 print(explainer.class_names[0])
 pred = explainer.class_names[int(predict_lr([text] * 10)[0])]
 alternative = explainer.class_names[1 - predict_lr([text] * 10)[0]]
 b = time.time()
-exp = explainer.explain_instance(text, predict_lr, threshold=0.95, verbose=False)
+exp = explainer.explain_instance(text, predict_lr, threshold=0.8, verbose=False)
 print('Time: %s' % (time.time() - b))
 print('Prediction: %s' % pred)
 print('Anchor: %s' % (' AND '.join(exp.names())))
