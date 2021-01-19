@@ -94,6 +94,10 @@ def np_mask(array, i):
     ans[i] = np.array(['[MASK]'] * len(ans[i]))
     return np.array(ans)
 
+def sum2one(numbers):
+    for i in range(len(numbers)):
+        numbers[i] = numbers[i] / sum(numbers)
+    return numbers
 
 class SentencePerturber:
     def __init__(self, words, tg, onepass=False):
@@ -240,7 +244,7 @@ class AnchorText(object):
                         # probs = [1 - perturber.pr[i], perturber.pr[i]]
                         # data[:, i] = np.random.choice([0, 1], num_samples, p=probs)
                     for n in range(num_samples):
-                        choice = np.random.choice(a=len(words), size=3, p=probs)
+                        choice = np.random.choice(a=len(words), size=3, p=sum2one(probs))
                         data[n, choice] = 0
                     data[:, present] = 1
                     data[:, not_chinese] = 1
