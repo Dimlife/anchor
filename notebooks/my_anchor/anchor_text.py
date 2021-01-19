@@ -269,7 +269,7 @@ class AnchorText(object):
 
         return words, positions, true_label, sample_fn
 
-    def explain_instance(self, text, classifier_fn, threshold=0.95,
+    def explain_instance(self, text, classifier_fn, threshold=0.8,
                          delta=0.1, tau=0.15, batch_size=10, onepass=False,
                          use_proba=False, beam_size=4,
                          **kwargs):
