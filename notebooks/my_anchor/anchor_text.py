@@ -114,6 +114,8 @@ class SentencePerturber:
             # a[i] = self.mask
             # s = ' '.join(a)
             w, p = self.probs(s)[0]
+            # get(a, b)函数返回字典中a的值，若a不存在，返回b; 这里返回0.5和字典中值较小值
+            # 若词不存在, 返回0.01：则词的概率不大，因此后续data中0->扰动，1->不扰动=
             self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
 
     def sample(self, data):
@@ -222,16 +224,24 @@ class AnchorText(object):
                 raw_data = [' '.join(x) for x in raw]
             else:
                 if self.use_bert:
-                    data = np.zeros((num_samples, len(words)))
+                    data = np.ones((num_samples, len(words)))
                     not_chinese = []
+                    probs = []
                     for i in range(len(words)):
                         if i in present:
+                            probs.append(0)
                             continue
                         # 限定了非中文字符就不变换 每个token第一个字符若非中文则不变换
                         if not '\u4e00' <= words[i][0] <= '\u9fa5':
                             not_chinese.append(i)
-                        probs = [1 - perturber.pr[i], perturber.pr[i]]
-                        data[:, i] = np.random.choice([0, 1], num_samples, p=probs)
+                            probs.append(0)
+                            continue
+                        probs.append(1 - perturber.pr[i])
+                        # probs = [1 - perturber.pr[i], perturber.pr[i]]
+                        # data[:, i] = np.random.choice([0, 1], num_samples, p=probs)
+                    for n in range(num_samples):
+                        choice = np.random.choice(a=num_samples, size=3, p=probs)
+                        data[n, choice] = 0
                     data[:, present] = 1
                     data[:, not_chinese] = 1
                     raw_data = []
