@@ -9,7 +9,7 @@ import sys
 from io import open
 import numpy as np
 from langconv import *
-
+# import langconv
 
 def id_generator(size=15):
     """Helper function to generate random div ids. This is useful for embedding
