@@ -1,1 +1,1 @@
-__all__ = ['anchor_text']
+__all__ = ['anchor_text', 'Converter']

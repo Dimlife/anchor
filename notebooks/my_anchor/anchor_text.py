@@ -8,7 +8,7 @@ import string
 import sys
 from io import open
 import numpy as np
-from langconv import *
+from langconv import Converter
 # import langconv
 
 def id_generator(size=15):
