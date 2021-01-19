@@ -240,7 +240,7 @@ class AnchorText(object):
                         # probs = [1 - perturber.pr[i], perturber.pr[i]]
                         # data[:, i] = np.random.choice([0, 1], num_samples, p=probs)
                     for n in range(num_samples):
-                        choice = np.random.choice(a=num_samples, size=3, p=probs)
+                        choice = np.random.choice(a=len(words), size=3, p=probs)
                         data[n, choice] = 0
                     data[:, present] = 1
                     data[:, not_chinese] = 1
