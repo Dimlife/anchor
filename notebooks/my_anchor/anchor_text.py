@@ -95,9 +95,10 @@ def np_mask(array, i):
     return np.array(ans)
 
 def sum2one(numbers):
+    ans = []
     for i in range(len(numbers)):
-        numbers[i] = numbers[i] / sum(numbers)
-    return numbers
+        ans.append(numbers[i] / sum(numbers))
+    return ans
 
 class SentencePerturber:
     def __init__(self, words, tg, onepass=False):
