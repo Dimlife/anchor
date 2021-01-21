@@ -8,7 +8,7 @@ import string
 import sys
 from io import open
 import numpy as np
-from langconv import Converter
+from . import langconv
 # import langconv
 
 def id_generator(size=15):
@@ -25,7 +25,7 @@ def exp_normalize(x):
 
 def tradition2simple(line):
     # 将繁体转换成简体
-    return Converter('zh-hans').convert(line)
+    return langconv.Converter('zh-hans').convert(line)
 
 class TextGenerator(object):
     def __init__(self, url=None):
