@@ -275,7 +275,7 @@ class AnchorText(object):
 
     def explain_instance(self, text, classifier_fn, threshold=0.5,
                          delta=0.5, tau=0.3, batch_size=10, onepass=False,
-                         use_proba=True, beam_size=4,
+                         use_proba=False, beam_size=4,
                          **kwargs):
         if type(text) == bytes:
             text = text.decode()
