@@ -273,13 +273,10 @@ class AnchorText(object):
 
         return words, positions, true_label, sample_fn
 
-    def explain_instance(self, text, classifier_fn, threshold=0.7,
-                         delta=0.2, tau=0.15, batch_size=10, onepass=False,
+    def explain_instance(self, text, classifier_fn, threshold=0.5,
+                         delta=0.5, tau=0.3, batch_size=10, onepass=False,
                          use_proba=True, beam_size=4,
                          **kwargs):
-        if type(text) == bytes:
-        if type(text) == bytes:
-        if type(text) == bytes:
         if type(text) == bytes:
             text = text.decode()
         words, positions, true_label, sample_fn = self.get_sample_fn(
@@ -287,7 +284,7 @@ class AnchorText(object):
         exp = anchor_base.AnchorBaseBeam.anchor_beam(
             sample_fn, delta=delta, epsilon=tau, batch_size=batch_size,
             desired_confidence=threshold, stop_on_first=True,
-            coverage_samples=100, **kwargs)  # Beam搜索
+            coverage_samples=1, **kwargs)  # Beam搜索
         exp['names'] = [words[x] for x in exp['feature']]
         exp['positions'] = [positions[x] for x in exp['feature']]
         exp['instance'] = text
