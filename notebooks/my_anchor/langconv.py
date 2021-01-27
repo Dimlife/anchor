@@ -2,6 +2,8 @@
 
 from copy import deepcopy
 import re
+from . import zh_wiki
+
 
 try:
     import psyco
@@ -9,14 +11,15 @@ try:
 except:
     pass
 
-try:
-    from zh_wiki import zh2Hant, zh2Hans
-except ImportError:
-    from zhtools.zh_wiki import zh2Hant, zh2Hans
+# try:
+#     from zh_wiki import zh2Hant, zh2Hans
+# except ImportError:
+#     from zhtools.zh_wiki import zh2Hant, zh2Hans
 
 import sys
 py3k = sys.version_info >= (3, 0, 0)
-
+zh2Hant = zh_wiki.zh2Hant
+zh2Hans = zh_wiki.zh2Hans
 if py3k:
     UEMPTY = ''
 else:
