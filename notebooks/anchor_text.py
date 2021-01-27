@@ -132,7 +132,7 @@ print(explainer.class_names[0])
 pred = explainer.class_names[int(predict_lr([text] * 10)[0])]
 alternative = explainer.class_names[1 - predict_lr([text] * 10)[0]]
 b = time.time()
-exp = explainer.explain_instance(text, predict_lr, threshold=0.9, verbose=False)
+exp = explainer.explain_instance(text, predict_lr, threshold=0.7, verbose=False)
 print('Time: %s' % (time.time() - b))
 print('Prediction: %s' % pred)
 print('Anchor: %s' % (' AND '.join(exp.names())))
