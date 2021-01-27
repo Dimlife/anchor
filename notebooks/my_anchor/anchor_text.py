@@ -275,8 +275,11 @@ class AnchorText(object):
 
     def explain_instance(self, text, classifier_fn, threshold=0.7,
                          delta=0.2, tau=0.15, batch_size=10, onepass=False,
-                         use_proba=False, beam_size=4,
+                         use_proba=True, beam_size=4,
                          **kwargs):
+        if type(text) == bytes:
+        if type(text) == bytes:
+        if type(text) == bytes:
         if type(text) == bytes:
             text = text.decode()
         words, positions, true_label, sample_fn = self.get_sample_fn(
