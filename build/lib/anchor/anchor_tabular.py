@@ -171,7 +171,7 @@ class AnchorTabularExplainer(object):
             'predictProba': list(predict_proba),
             'labelNames': list(map(str, self.class_names)),
             'rawDataType': 'tabular',
-            'explanationType': 'anchor',
+            'explanationType': 'my_anchor',
             'trueClass': False
         }
         return ret

@@ -7,7 +7,7 @@ setup(name='anchor_exp',
       author='Marco Tulio Ribeiro',
       author_email='marcotcr@gmail.com',
       license='BSD',
-      packages=['anchor'],
+      packages=['my_anchor'],
       python_requires='>=3.5',
       install_requires=[
           'numpy',

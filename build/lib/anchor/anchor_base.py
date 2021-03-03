@@ -1,4 +1,4 @@
-"""Base anchor functions"""
+"""Base my_anchor functions"""
 from __future__ import print_function
 import numpy as np
 import operator
@@ -352,7 +352,7 @@ class AnchorBaseBeam(object):
                     print('%s mean = %.2f lb = %.2f ub = %.2f coverage: %.2f n: %d' % (t, mean, lb, ub, coverage, state['t_nsamples'][t]))
                 if mean >= desired_confidence and lb > desired_confidence - epsilon_stop:
                     if verbose:
-                        print('Found eligible anchor ', t, 'Coverage:',
+                        print('Found eligible my_anchor ', t, 'Coverage:',
                               coverage, 'Is best?', coverage > best_coverage)
                     if coverage > best_coverage:
                         best_coverage = coverage
@@ -363,10 +363,10 @@ class AnchorBaseBeam(object):
                 break
             current_size += 1
         if best_tuple == ():
-            # Could not find an anchor, will now choose the highest precision
+            # Could not find an my_anchor, will now choose the highest precision
             # amongst the top K from every round
             if verbose:
-                print('Could not find an anchor, now doing best of each size')
+                print('Could not find an my_anchor, now doing best of each size')
             tuples = []
             for i in range(0, current_size):
                 tuples.extend(best_of_size[i])

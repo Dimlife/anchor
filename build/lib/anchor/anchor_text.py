@@ -65,7 +65,7 @@ class SentencePerturber:
             a[i] = self.mask
             s = ' '.join(a)
             w, p = self.probs(s)[0]
-            self.pr[i] =  min(0.5, dict(zip(w, p)).get(words[i], 0.01))
+            self.pr[i] = min(0.5, dict(zip(w, p)).get(words[i], 0.01))
     def sample(self, data):
         a = self.array.copy()
         masks = np.where(data == 0)[0]
@@ -244,7 +244,7 @@ class AnchorText(object):
         <script>
             div = d3.select("#{random_id}");
             lime.RenderExplanationFrame(div,{label_names}, {predict_proba},
-            {true_class}, {explanation}, {raw_data}, "text", "anchor");
+            {true_class}, {explanation}, {raw_data}, "text", "my_anchor");
         </script>'''.format(random_id=random_id,
                             label_names=jsonize(self.class_names),
                             predict_proba=jsonize(list(predict_proba)),
